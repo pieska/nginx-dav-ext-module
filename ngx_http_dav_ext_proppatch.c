@@ -51,7 +51,6 @@ static char *ngx_http_dav_ext_proppatch_create_propstats(ngx_http_request_t *r,
 
 void ngx_http_dav_ext_proppatch_handler(ngx_http_request_t *r)
 {
-    off_t                                 len;
     ngx_buf_t                            *b;
     ngx_chain_t                          *cl;
     xmlSAXHandler                         sax;
@@ -82,8 +81,6 @@ void ngx_http_dav_ext_proppatch_handler(ngx_http_request_t *r)
         return;
     }
 
-    len = 0;
-
     for (cl = r->request_body->bufs; cl; cl = cl->next) {
         b = cl->buf;
 
@@ -99,8 +96,6 @@ void ngx_http_dav_ext_proppatch_handler(ngx_http_request_t *r)
         if (ngx_buf_special(b)) {
             continue;
         }
-
-        len += b->last - b->pos;
 
         if (xmlParseChunk(pctx, (const char *) b->pos, b->last - b->pos,
                           b->last_buf)) {
