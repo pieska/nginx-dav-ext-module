@@ -119,21 +119,31 @@ void ngx_http_dav_ext_proppatch_handler(ngx_http_request_t *r)
 void  ngx_http_dav_ext_proppatch_add_namespace ( ngx_array_t *namespaces,
                         const xmlChar* prefix, const xmlChar* namespace )
 {
-    ngx_http_dav_ext_propatch_namespace_t *namespace_array= namespaces->elts;
+    ngx_http_dav_ext_propatch_namespace_t *namespace_array;
+    ngx_http_dav_ext_propatch_namespace_t *nsp;
+    unsigned int                           i;
 
-    unsigned int i;
+    if (prefix == NULL || namespace == NULL) {
+        return;
+    }
+
+    namespace_array = namespaces->elts;
+
     for (i = 0; i < namespaces->nelts; i++) {
-        ngx_http_dav_ext_propatch_namespace_t* nsp = &namespace_array[i];
+        nsp = &namespace_array[i];
         if (ngx_strcmp(nsp->prefix, prefix) == 0
            && ngx_strcmp(nsp->namespace, namespace) == 0 ) {
             break;
         }
     }
 
-    if ( i == namespaces->nelts ) {
-        ngx_http_dav_ext_propatch_namespace_t* nsp =ngx_array_push(namespaces);
-        nsp->prefix=prefix;
-        nsp->namespace=namespace;
+    if (i == namespaces->nelts) {
+        nsp = ngx_array_push(namespaces);
+        if (nsp == NULL) {
+            return;
+        }
+        nsp->prefix = prefix;
+        nsp->namespace = namespace;
     }
 }
 
@@ -184,7 +194,7 @@ ngx_http_dav_ext_proppatch_xml_start(void *data, const xmlChar *localname,
     const xmlChar **attributes)
 {
     ngx_http_dav_ext_propatch_xml_ctx_t *xctx = data;
-    ngx_http_dav_ext_proppatch_invert_node ( xctx, prefix, localname, uri );
+    ngx_http_dav_ext_proppatch_invert_node( xctx, prefix, localname, uri);
 }
 
 void ngx_http_dav_ext_proppatch_parse_property( void *data,
@@ -212,7 +222,7 @@ ngx_http_dav_ext_proppatch_xml_end(void *data, const xmlChar *localname,
     const xmlChar *prefix, const xmlChar *uri)
 {
     ngx_http_dav_ext_propatch_xml_ctx_t *xctx = data;
-    ngx_http_dav_ext_proppatch_invert_node ( xctx, prefix, localname, uri );
+    ngx_http_dav_ext_proppatch_invert_node( xctx, prefix, localname, uri);
 }
 
 
