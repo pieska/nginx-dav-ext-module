@@ -129,8 +129,8 @@ void  ngx_http_dav_ext_proppatch_add_namespace ( ngx_array_t *namespaces,
     unsigned int i;
     for (i = 0; i < namespaces->nelts; i++) {
         ngx_http_dav_ext_propatch_namespace_t* nsp = &namespace_array[i];
-        if (strcmp((char*)nsp->prefix, (char*)prefix) == 0
-           && strcmp((char*)nsp->namespace, (char*)namespace) == 0 ) {
+        if (ngx_strcmp(nsp->prefix, prefix) == 0
+           && ngx_strcmp(nsp->namespace, namespace) == 0 ) {
             break;
         }
     }
