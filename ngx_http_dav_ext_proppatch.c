@@ -109,6 +109,14 @@ void ngx_http_dav_ext_proppatch_handler(ngx_http_request_t *r)
 
     char *propstats = ngx_http_dav_ext_proppatch_create_propstats(r,
                                            xctx.properties, xctx.namespaces );
+    if (propstats == NULL) {
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+                      "ngx_http_dav_ext_proppatch_create_propstats() failed");
+        ngx_array_destroy(xctx.properties);
+        xmlFreeParserCtxt(pctx);
+        ngx_http_finalize_request(r, NGX_HTTP_INTERNAL_SERVER_ERROR);
+        return;
+    }
 
     ngx_array_destroy(xctx.properties);
     xmlFreeParserCtxt(pctx);
@@ -299,6 +307,10 @@ ngx_http_dav_ext_proppatch_create_propstats(ngx_http_request_t *r,
    }
 
    char* buffer = ngx_pnalloc(r->pool,size);
+   if (buffer == NULL) {
+     return NULL;
+   }
+
    void* dst = buffer;
 
    dst = ngx_copy(dst,multi_head, ngx_strlen(multi_head));
