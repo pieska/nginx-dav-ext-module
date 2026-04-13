@@ -230,7 +230,7 @@ ngx_http_dav_ext_proppatch_create_propstats(ngx_http_request_t *r,
 
     static u_char multi_head[] =
         "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-        "<D:multistatus";
+        "<D:multistatus xmlns:D=\"DAV:\"";
 
     static u_char xlmns[] =
         " xmlns:";
