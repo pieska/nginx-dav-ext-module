@@ -43,7 +43,7 @@ static ngx_int_t ngx_http_dav_ext_proppatch(ngx_http_request_t *r,
 static void ngx_http_dav_ext_proppatch_add_namespace ( ngx_array_t *namespaces,
     const xmlChar *prefix, const xmlChar *namespace );
 static void ngx_http_dav_ext_proppatch_invert_node( ngx_http_dav_ext_propatch_xml_ctx_t *xctx,
-    const xmlChar* namespacae, const xmlChar* fieldname, const xmlChar * namespace );
+    const xmlChar* prefix, const xmlChar* fieldname, const xmlChar * namespace );
 static void ngx_http_dav_ext_proppatch_parse_property( void *data,
     const xmlChar* content , int len);
 static char *ngx_http_dav_ext_proppatch_create_propstats(ngx_http_request_t *r,
