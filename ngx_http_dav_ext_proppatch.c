@@ -195,8 +195,20 @@ ngx_http_dav_ext_proppatch_xml_start(void *data, const xmlChar *localname,
 void ngx_http_dav_ext_proppatch_parse_property( void *data,
     const xmlChar* content , int len)
 {
+    u_char                              *copy;
     ngx_http_dav_ext_propatch_xml_ctx_t *xctx = data;
-    xctx->current_property->value = content;
+
+    if (xctx->current_property == NULL) {
+        return;
+    }
+
+    copy = ngx_pnalloc(xctx->request->pool, len);
+    if (copy == NULL) {
+        return;
+    }
+
+    ngx_memcpy(copy, content, len);
+    xctx->current_property->value = copy;
     xctx->current_property->value_len = len;
 }
 
