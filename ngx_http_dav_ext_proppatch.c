@@ -267,7 +267,6 @@ ngx_http_dav_ext_proppatch_create_propstats(ngx_http_request_t *r,
         "</D:response>";
 
     ngx_int_t size = ngx_strlen(multi_head)
-                + ngx_strlen(multi_head)
                 + ngx_strlen(multi_head_end)
                 + ngx_strlen(head)
                 + r->uri.len
