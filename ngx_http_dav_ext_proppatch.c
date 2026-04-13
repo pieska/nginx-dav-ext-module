@@ -89,7 +89,7 @@ void ngx_http_dav_ext_proppatch_handler(ngx_http_request_t *r)
 
         if (b->in_file) {
             ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-                          "PROPFIND client body is in file, "
+                          "PROPPATCH client body is in file, "
                           "you may want to increase client_body_buffer_size");
             xmlFreeParserCtxt(pctx);
             ngx_http_finalize_request(r, NGX_HTTP_INTERNAL_SERVER_ERROR);
